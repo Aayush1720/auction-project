@@ -5,6 +5,13 @@
 {% block content %}
 
 <h3>Home content</h3>
+{% if userLogged %}
+<h1>Welcome {{username}}</h1>
+
+{% else %}
+<h2>not logged in</h2>
+
+{% endif %}
 <header class="hero-section">
     <div class="content">
         <img src="img/light-logo.png" class="logo" alt="">

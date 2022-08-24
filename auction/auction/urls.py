@@ -16,7 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from bidding.views import home
+from authApp.views import loginView, registerUser
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',home)
+    path('',home, name="home"),
+    path('login',loginView, name="login"),
+    path('register',registerUser, name="register")
+    
 ]

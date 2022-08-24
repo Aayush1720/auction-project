@@ -5,15 +5,17 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
 # Custom account manager since we want to use our own user model
 class MyAccountManager(BaseUserManager):
-    def create_user(self, email , username, password = None):
+    def create_user(self, email , username, password ):
+        print("creating user")
         if not email :
             raise ValueError("email cant be empty")
         if not username :
             raise ValueError("username cant be empty")
         user = self.model(
             email = self.normalize_email(email),
-            username = username,
+            username = username
             )
+        
         user.set_password(password)
         user.save(using=self._db)
         return user
@@ -35,7 +37,8 @@ class MyAccountManager(BaseUserManager):
 
 class User(AbstractBaseUser):
     email                   = models.EmailField(verbose_name="email", max_length=60, unique=True)
-    Employee_ID_Number    = models.CharField(max_length=100, unique=True)
+    username                = models.TextField(max_length=100,default="temp")
+    Employee_ID_Number    = models.CharField(max_length=100)
     First_Name  = models.CharField(max_length=100)
     Last_Name   = models.CharField(max_length=100)
     password    =  models.CharField(max_length=100)
