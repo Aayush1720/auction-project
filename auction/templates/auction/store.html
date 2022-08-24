@@ -1,0 +1,15 @@
+{% extends 'auction/header.html' %}
+
+{% load static %}
+
+{% block content %}
+
+{% for product in products %}
+
+<h5>{{product.name}}</h5>
+<h6>{{product.imageUrl}}</h6>
+<img src="{{product.imageUrl}}">
+
+{% endfor %}
+
+{% endblock content %}
