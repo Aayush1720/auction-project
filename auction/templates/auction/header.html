@@ -2,36 +2,60 @@
 {% load static %}
 <html lang="en">
 
-    <head>
-        <title>Auction</title>
-        <!-- bootstrap / css stylesheet links -->
-        <link rel="stylesheet" href="{% static 'css/navbar.css' %}"/>
-        <link rel="stylesheet" href="{% static 'css/homepage.css' %}"/>
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+
+    <title>Action Gallery</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
 
 
-    </head>
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="{% static 'assets/css/fontawesome.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/templatemo-sixteen.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/owl.css' %}">
 
-    <body>
-        <h1> main hedaer part</h1>
-        <h3>navbar</h3>
-        <div class="nav">
-            <img src="img/dark-logo.png" class="brand-logo" alt="">
-            <div class="nav-items">
-                <div class="search">
-                    <input type="text" class="search-box" placeholder="search brand, product">
-                    <button class="search-btn">search</button>
-                </div>
-                <a href="#"><img src="img/user.png" alt=""></a>
-                <a href="#"><img src="img/cart.png" alt=""></a>
-            </div>
+  </head>
+
+  <body>
+
+
+    <!-- Header -->
+    <header class="">
+      <nav class="navbar navbar-expand-lg">
+        <div class="container">
+          <a class="navbar-brand" href="{% url 'home' %}"><h2>Action <em>Gallery</em></h2></a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item active">
+                <a class="nav-link" href="{% url 'home' %}">Home
+                  <span class="sr-only">(current)</span>
+                </a>
+              </li> 
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'store' %}">Our Products</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">About Us</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Contact Us</a>
+              </li>
+            </ul>
+          </div>
         </div>
-        <ul class="links-container">
-            <li class="link-item"><a href="#" class="link">home</a></li>
-            <li class="link-item"><a href="#" class="link">women</a></li>
-            <li class="link-item"><a href="#" class="link">men</a></li>
-            <li class="link-item"><a href="#" class="link">kids</a></li>
-            <li class="link-item"><a href="#" class="link">accessories</a></li>
-        </ul>
+      </nav>
+    </header>
+
         {% block content %}
 
         {% endblock content %}

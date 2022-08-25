@@ -1,0 +1,17 @@
+{% extends 'auction/header.html' %}
+
+{% load static %}
+
+{% block content %}
+ 
+<h4> {{product.name}} </h4>
+
+<h4>
+    {product.curPrice}
+</h4>
+<form action="{% url 'bid' product.pid %}" method = "POST" id = "bidForm">
+ <input type="number" name = "bidPrice" > 
+ <button type="submit" >BID</button>
+</form>
+
+{% endblock content %}

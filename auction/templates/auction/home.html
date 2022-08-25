@@ -4,19 +4,38 @@
 
 {% block content %}
 
-<h3>Home content</h3>
+<!-- <h3>Home content</h3>
 {% if userLogged %}
 <h1>Welcome {{username}}</h1>
 
 {% else %}
 <h2>not logged in</h2>
 
-{% endif %}
-<header class="hero-section">
-    <div class="content">
-        <img src="img/light-logo.png" class="logo" alt="">
-        <p class="sub-heading">best fashion collection of all time</p>
+{% endif %} -->
+
+
+<!-- Banner Starts Here -->
+
+<div class="banner header-text">
+    <div class="owl-banner owl-carousel">
+      <div class="banner-item-01">
+        <div class="text-content">
+          <h2>Antiques with a History</h2>
+        </div>
+      </div>
+      <div class="banner-item-02">
+        <div class="text-content">
+          <h2>Oldest Antique in the world</h2>
+        </div>
+      </div>
+      <div class="banner-item-03">
+        <div class="text-content">
+          <h2>Stuff that matches your class</h2>
+        </div>
+      </div>
     </div>
-</header>
+  </div>
+  <!-- Banner Ends Here -->
+
 
 {% endblock content %}

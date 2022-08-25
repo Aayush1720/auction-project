@@ -12,6 +12,7 @@ class product(models.Model):
     image1 = models.ImageField(null=True, blank=True,upload_to='images')
     description = models.TextField(null=True,blank=True)
     age = models.IntegerField(null=True)
+    deadline = models.DateTimeField()
 
     def __str__(self):
         return self.name
@@ -29,7 +30,8 @@ class bid(models.Model):
     bidder = models.ForeignKey(User,on_delete=models.CASCADE)
     product = models.ForeignKey(product, on_delete=models.CASCADE)
     prevPrice = models.FloatField(null=True)
+    curPrice = models.FloatField()
     active = models.BooleanField(default=True)
-    
+
 
     
