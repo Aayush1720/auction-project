@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from bidding.views import home, store
+from bidding.views import home, store,product
 from authApp.views import loginView, registerUser
 from django.conf.urls.static import static  
 from django.conf import settings  
@@ -25,7 +25,8 @@ urlpatterns = [
     path('',home, name="home"),
     path('login',loginView, name="login"),
     path('register',registerUser, name="register"),
-    path('store/',store,name ="store")
+    path('store/',store,name ="store"),
+    path('store/product<int:id>',product, name="product")
     
 ]
 
