@@ -1,7 +1,7 @@
 import re
 from django.shortcuts import render
 from django.http.response import JsonResponse, HttpResponse
-from .models import product
+from .models import product as productModel
 # Create your views here.
 def home(request):
     userLogged = False
@@ -16,12 +16,12 @@ def home(request):
 
 def store(request):
 
-    products = product.objects.all()
+    products = productModel.objects.all()
     data = {"products":products }
     return render(request, 'auction/store.html', data)
 
 def product(request, id):
-    prod = product.objects.get(pid=id)
+    prod = productModel.objects.get(pid=id)
 
     data = {"product":prod}
     return render(request, "auction/product.html", data)
