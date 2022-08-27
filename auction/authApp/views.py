@@ -31,11 +31,10 @@ def loginView(request):
     if request.method == "POST":
         email = request.POST.get("email")
         password = request.POST.get("password")
-        usernow = User.objects.get(email=email)
-        username = usernow.username
+        username = email
         # return HttpResponse("trying")
         print(username, password)
-        user = authenticate(request, password=password, email = email)
+        user = authenticate(request,username=username, password=password)
         if user is not None:
             login(request,user)
             return redirect('home')

@@ -3,12 +3,12 @@
 {% load static %}
 
 {% block content %}
-
+<br><br><br><br><br>
 <form  action = "{% url 'login' %}" method = "post">
     {% csrf_token %}
 
 
-    <input type="email" name="email">
+    <input type="text" name="email">
     <input type="password" name="password">
     <button type = "submit" "> Login </button>
 </form>

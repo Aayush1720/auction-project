@@ -1,7 +1,7 @@
 import re
 from django.shortcuts import render
 from django.http.response import JsonResponse, HttpResponse
-from .models import product as productModel
+from .models import product as productModel, bid as bidModel
 # Create your views here.
 def home(request):
     userLogged = False
@@ -22,28 +22,35 @@ def store(request):
 
 def product(request, id):
     prod = productModel.objects.get(pid=id)
-
-    data = {"product":prod}
+    curPrice = prod.curPrice
+    minBid = (curPrice*101)//100 +1
+    data = {"product":prod, "minBid" : minBid}
     return render(request, "auction/product.html", data)
 
 
 
 def bid(request, id):
+    print("in bid")
     if request.method == "POST":
+        print("in bid post")
         data = {}
-        prod = product.objects.get(pid=id)
-        curPrice = prod.price
-        bidPrice = request.POST.get("bidPrice")
-        if bidPrice < curPrice*(101/100) :
+        prod = productModel.objects.get(pid=id)
+        curPrice = prod.curPrice
+        bidPrice = float(request.POST.get("bidPrice"))
+        if bidPrice < (curPrice*101)//100 +1 :
             return HttpResponse("minimum price bid critera is not begin fullfiled")
         
-        latestBid = bid(
+        latestBid = bidModel(
             bidder = request.user,
             product = prod,
             prevPrice = curPrice,
             curPrice = bidPrice
 
         )
+        data["minBid"] = curPrice*(101//100) +1
+        prod.prevPrice = curPrice
+        prod.curPrice = bidPrice
+        prod.save()
         latestBid.save()
         return render(request, 'auction/product.html', data)
     
