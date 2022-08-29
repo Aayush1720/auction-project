@@ -1,0 +1,20 @@
+{% extends 'auction/header.html' %}
+
+{% load static %}
+
+{% block content %}
+<br><br><br><br><br>
+<h2>Welcome {{user.First_Name}}</h2>
+<h2>Current Balance :  {{user.balance}}</h2>
+
+
+
+
+<form action="{% url 'addBalance' %}" method="POST">
+    {% csrf_token %}
+    add balance <input type="number" name = "balance">
+    <br>
+    <button type = "submit" >ADD</button>
+</form>
+
+{% endblock content %}

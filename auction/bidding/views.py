@@ -1,7 +1,9 @@
 import re
-from django.shortcuts import render
+from unicodedata import decimal
+from django.shortcuts import render, redirect
 from django.http.response import JsonResponse, HttpResponse
 from .models import product as productModel, bid as bidModel
+from authApp.models import userProfile
 # Create your views here.
 def home(request):
     userLogged = False
@@ -51,6 +53,23 @@ def bid(request, id):
         prod.prevPrice = curPrice
         prod.curPrice = bidPrice
         prod.save()
-        latestBid.save()
-        return render(request, 'auction/product.html', data)
+        return product(request, prod.pid)
+
+def userInfo(request):
+    if not request.user.is_authenticated:
+        return render(request, "login.html")
     
+    userp = userProfile.objects.get(user=request.user)
+    data = {"user" : userp}
+    return render(request, "auction/userInfo.html",data)
+
+def addBalance(request):
+    if not request.user.is_authenticated:
+        return render(request, "login.html")
+    curUser = userProfile.objects.get(user=request.user)
+    amount = request.POST.get("balance")
+    print(amount)
+    print(request.POST)
+    curUser.balance += decimal(float(amount))
+    curUser.save()
+    return userInfo(request)

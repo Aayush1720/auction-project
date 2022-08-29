@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from bidding.views import home, store,product,bid
+from bidding.views import home, store,product,bid, userInfo, addBalance
 from authApp.views import loginView, registerUser
 from django.conf.urls.static import static  
 from django.conf import settings  
@@ -27,8 +27,9 @@ urlpatterns = [
     path('register',registerUser, name="register"),
     path('store/',store,name ="store"),
     path('store/product<int:id>',product, name="product"),
-    path('store/bid<int:id>', bid, name="bid")
-    
+    path('store/bid<int:id>', bid, name="bid"),
+    path('home/userInfo',userInfo, name ="userInfo"),
+    path('home/userInfo/addBalance', addBalance, name="addBalance")
 ]
 
 urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)  
