@@ -1,0 +1,51 @@
+{% extends 'auction/header.html' %}
+
+{% load static %}
+
+{% block content %}
+<br><br><br><br><br>
+
+<div class="content">
+    
+    <div class="container">
+      <h2 class="mb-5">All previous Bids</h2>
+
+      <div class="table-responsive">
+
+        <table class="table custom-table">
+          <thead>
+            <tr>
+              <th scope="col">Product Name</th>
+              <th scope="col">Last Price</th>
+              <th scope="col">Bid Price</th>
+              <th scope="col">Active</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for bid in allBid %}
+            <tr>
+              <td>
+               <a href="{% url 'product' bid.product.pid %}">{{bid.product.name}}</a> 
+              </td>
+              <td>{{bid.prevPrice}}</td>
+              <td>
+                {{bid.curPrice}}
+              </td>
+              <td>{{bid.active}}</td>
+              
+            </tr>
+            {% endfor %}
+            
+            
+          </tbody>
+        </table>
+      </div>
+
+
+    </div>
+
+  </div>
+
+
+
+{% endblock content %}

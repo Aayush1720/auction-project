@@ -1,0 +1,51 @@
+{% extends 'auction/header.html' %}
+
+{% load static %}
+
+{% block content %}
+<br><br><br><br><br>
+
+<div class="content">
+    
+    <div class="container">
+      <h2 class="mb-5">Listed Products</h2>
+
+      <div class="table-responsive">
+
+        <table class="table custom-table">
+          <thead>
+            <tr>
+              <th scope="col">Product Name</th>
+              <th scope="col">Base Price</th>
+              <th scope="col">Current Price</th>
+              <th scope="col">Deadline</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for prod in products %}
+            <tr>
+              <td>
+               <a href="{% url 'product' prod.pid %}">{{prod.name}}</a> 
+              </td>
+              <td>{{prod.basePrice}}</td>
+              <td>
+                {{prod.curPrice}}
+              </td>
+              <td>{{prod.deadline}}</td>
+              
+            </tr>
+            {% endfor %}
+            
+            
+          </tbody>
+        </table>
+      </div>
+
+
+    </div>
+
+  </div>
+
+
+
+{% endblock content %}

@@ -1,5 +1,6 @@
 from django.db import models
 from authApp.models import *
+from datetime import datetime
 
 
 # Create your models here.
@@ -13,6 +14,7 @@ class product(models.Model):
     description = models.TextField(null=True,blank=True)
     age = models.IntegerField(null=True)
     deadline = models.DateTimeField()
+    complete = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
@@ -25,6 +27,12 @@ class product(models.Model):
             url = ''
         
         return url
+    @property
+    def isComplete(self):
+        if self.deadline <= datetime.now():
+            self.complete = True
+        
+        return self.complete
 
 class bid(models.Model):
     bidder = models.ForeignKey(User,on_delete=models.CASCADE)

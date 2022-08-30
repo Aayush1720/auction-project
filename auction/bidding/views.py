@@ -17,6 +17,11 @@ def home(request):
     return render(request, 'auction/home.html', data)
 
 def store(request):
+    if request.method == "POST":
+        queryString = request.POST.get("query")
+        res = productModel.objects.filter(name__icontains=queryString)
+        data = {"products":res }
+        return render(request, 'auction/store.html', data)
 
     products = productModel.objects.all()
     data = {"products":products }
@@ -33,6 +38,8 @@ def product(request, id):
 
 def bid(request, id):
     print("in bid")
+    if not request.user.is_authenticated:
+        return render(request,"auction/login.html")
     if request.method == "POST":
         print("in bid post")
         data = {}
@@ -41,7 +48,29 @@ def bid(request, id):
         bidPrice = float(request.POST.get("bidPrice"))
         if bidPrice < (curPrice*101)//100 +1 :
             return HttpResponse("minimum price bid critera is not begin fullfiled")
-        
+        curUser = userProfile.objects.get(user = request.user)
+        if curUser.balance < bidPrice:
+            return HttpResponse("not enough balance")
+
+        lastBid = bidModel.objects.all().filter(product=prod, active=True)
+        if len(lastBid) > 0:
+            lastBid = lastBid[0]
+            print("last bid exists")
+            lastBid.active = False
+            lastBidder = userProfile.objects.get(user = lastBid.bidder)
+            lastBidder.balance += lastBid.curPrice
+            lastBidder.save()
+            lastBid.save()
+        else:
+            print("no last bid")
+
+        return HttpResponse("success")
+
+        data["minBid"] = curPrice*(101//100) +1
+        prod.prevPrice = curPrice
+        prod.curPrice = bidPrice
+        prod.save()
+
         latestBid = bidModel(
             bidder = request.user,
             product = prod,
@@ -49,10 +78,7 @@ def bid(request, id):
             curPrice = bidPrice
 
         )
-        data["minBid"] = curPrice*(101//100) +1
-        prod.prevPrice = curPrice
-        prod.curPrice = bidPrice
-        prod.save()
+        latestBid.save()
         return product(request, prod.pid)
 
 def userInfo(request):
@@ -70,6 +96,23 @@ def addBalance(request):
     amount = request.POST.get("balance")
     print(amount)
     print(request.POST)
-    curUser.balance += decimal(float(amount))
+    curUser.balance += float(amount)
     curUser.save()
     return userInfo(request)
+
+def allBidView(request):
+    if not request.user.is_authenticated:
+        return render(request, "login.html")
+    
+    allBids = bidModel.objects.filter(bidder=request.user)
+    data = {"allBid" : allBids}
+
+    return render(request,"auction/bidHistory.html", data)
+
+def myProducts(request):
+    if not request.user.is_authenticated:
+        return render(request, "login.html")
+
+    products =  productModel.objects.filter(seller=request.user)
+    data = {"products":products}
+    return render(request,"auction/myProducts.html", data)

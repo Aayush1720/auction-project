@@ -9,7 +9,7 @@ class userProfile(models.Model):
     First_Name      = models.CharField(max_length=100)
     Last_Name       = models.CharField(max_length=100)
     Contact_Number  = models.CharField(max_length=100,null=True)
-    balance         = models.DecimalField(default=0.00,null=True, max_digits=10, decimal_places=2)
+    balance         = models.FloatField(default=0.00,null=True)
 
     def __str__(self):
         return self.First_Name
