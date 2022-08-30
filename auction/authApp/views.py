@@ -49,7 +49,7 @@ def loginView(request):
     
     return render(request, "auction/login.html")
 
-def logout(request):
+def logoutUser(request):
     if(request.user.is_authenticated):
         logout(request)
 

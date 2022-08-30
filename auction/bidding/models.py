@@ -1,11 +1,14 @@
 from django.db import models
 from authApp.models import *
 from datetime import datetime
-
+import uuid
 
 # Create your models here.
 class product(models.Model):
-    pid = models.IntegerField(null=False, unique=True, primary_key=True)
+    pid = models.UUIDField(
+         primary_key = True,
+         default = uuid.uuid4,
+         editable = False)
     seller = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=150, null=True)
     basePrice = models.FloatField(null=False)
@@ -40,6 +43,7 @@ class bid(models.Model):
     prevPrice = models.FloatField(null=True)
     curPrice = models.FloatField()
     active = models.BooleanField(default=True)
-
+    successfull = models.BooleanField(default=False)
+    
 
     

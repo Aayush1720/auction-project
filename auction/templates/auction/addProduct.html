@@ -1,0 +1,23 @@
+{% extends 'auction/header.html' %}
+
+{% load static %}
+
+{% block content %}
+<br><br><br><br>
+<form action="{% url 'addProduct' %}" method="POST">
+    {% csrf_token %}
+    <input type="text" name="pname" placeholder="name">
+    <br>
+    <input type="number" name="price" placeholder="price" >
+    <br>
+    <input type="numeber" name="age" placeholder="age">
+    <br>
+    <input type="text" name="description" placeholder="description">
+    <br>
+    <label for="deadline"> Deadline  </label><input type="datetime-local" name="deadline" id="deadline" placeholder="deadline">
+    <br>
+    <label for="id_image"> product image  </label><input type="file" name="image" accept="image/*" id="id_image">
+    <button type="submit"> ADD</button>
+</form>
+
+{% endblock content %}

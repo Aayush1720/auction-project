@@ -15,8 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from bidding.views import home, store,product,bid, userInfo, addBalance, allBidView, myProducts
-from authApp.views import loginView, registerUser
+from bidding.views import home, store,product,bid, userInfo, addBalance, allBidView, myProducts, addProduct
+from authApp.views import loginView, registerUser, logoutUser
 from django.conf.urls.static import static  
 from django.conf import settings  
 
@@ -25,13 +25,15 @@ urlpatterns = [
     path('',home, name="home"),
     path('login',loginView, name="login"),
     path('register',registerUser, name="register"),
+    path('logout',logoutUser, name="logout"),
     path('store/',store,name ="store"),
-    path('store/product<int:id>',product, name="product"),
-    path('store/bid<int:id>', bid, name="bid"),
+    path('store/product<str:id>',product, name="product"),
+    path('store/bid<str:id>', bid, name="bid"),
     path('home/userInfo',userInfo, name ="userInfo"),
     path('home/userInfo/addBalance', addBalance, name="addBalance"),
     path('home/userInfo/allbid',allBidView, name="allBidView"),
-    path('home/userInfo/myProducts',myProducts, name="myProducts" )
+    path('home/userInfo/myProducts',myProducts, name="myProducts" ),
+    path('home/userInfo/addProduct', addProduct, name="addProduct")
 ]  
 
 urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)  
