@@ -3,9 +3,60 @@
 {% load static %}
 
 {% block content %}
+<link rel="stylesheet" href="{% static 'css/userInfo.css' %}">
+
 <br><br><br><br><br>
-<h2>Welcome {{user.First_Name}}</h2>
-<h2>Current Balance :  {{user.balance}}</h2>
+<div style="align-content:center" >
+
+    <div class="card">
+            
+        <div class="top-container">
+            
+            
+            <div class="ml-3">
+                <h5 class="name">{{user.First_Name}}</h5>
+                <p class="mail">{{user.email}}</p>
+            </div>
+        </div>
+
+
+        <div class="middle-container d-flex justify-content-between align-items-center mt-3 p-2">
+                <div class="dollar-div px-3">
+                    
+                    <div class="round-div"><i class="fa dollar">£</i></div>
+
+                </div>
+                <div class="d-flex flex-column text-right mr-2">
+                    <span class="current-balance">Current Balance</span>
+                    <span class="amount"><span class="dollar-sign">£</span>{{user.balance}}</span>
+                </div>
+
+        </div>
+
+        <div class="recent-border mt-4">
+            
+            <span class="recent-orders"> <a href="{% url 'myProducts' %}"> My Products</a> </span>
+        </div>
+        <div class="wishlist-border pt-2">
+            <span class="wishlist"> <a href="{% url 'allBidView' %}"> My Biddings </a> </span>
+        </div>
+        <div class="fashion-studio-border pt-2">
+            <span class="fashion-studio"><form action="{% url 'addBalance' %}" method="POST">
+                {% csrf_token %}
+                Add Balance <input type="number" name = "balance">
+                <br>
+                <button type = "submit" >ADD</button>
+            </form>
+        </span>
+        </div>
+        
+    </div>
+
+    </div>
+</div>
+
+<!-- <h2>Welcome {{user.First_Name}}</h2>
+<h2>Current Balance :  £{{user.balance}}</h2>
 
 
 
@@ -15,6 +66,6 @@
     add balance <input type="number" name = "balance">
     <br>
     <button type = "submit" >ADD</button>
-</form>
+</form> -->
 
 {% endblock content %}

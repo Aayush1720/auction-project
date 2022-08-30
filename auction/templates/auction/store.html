@@ -3,8 +3,43 @@
 {% load static %}
 
 {% block content %}
-<h1>hello</h1>
+<br><br><br><br>
 
+<link rel="stylesheet" href="{% static 'css/storeSearch.css' %}">
+
+<div style = "margin: auto;
+              width: 60%;
+              padding: 10px;
+              align-items: center;
+              ">
+
+      <div class="container justify-content-center">
+        
+
+          <div class="col-md-6">
+              
+              
+                  <form action="{% url 'store' %}"  method="post">
+                    {% csrf_token %}
+                    <span>
+                        <input type="text" class="form-control input-text" placeholder="Search products...." aria-label="Recipient's username" aria-describedby="basic-addon2" name="query" >
+                        <button class="btn btn-outline-warning btn-lg" type="submit"><i class="fa fa-search"></i></button>
+                    </span>
+                    
+                  </form>
+              
+          </div>
+    
+              
+          </div>        
+        
+    </div>
+    
+  
+
+
+
+<br>
 <div class="latest-products">
     <div class="container">
       <div class="row">
@@ -14,21 +49,14 @@
             <a href="products.html">view all products <i class="fa fa-angle-right"></i></a>
           </div> -->
         </div>
-      </p>
-        <form action="{% url 'store' %}"  method="post">
-          {% csrf_token %}
-          <input type="text" name="query">
-          <button type="submit" > Search</button>
-        </form>
-      </p>
-        <br>
+      
             {% for product in products %}
                 <div class="col-md-4">
                     <div class="product-item">
                     <a href="{% url 'product' product.pid %}"><img src="{{product.imageUrl}}" alt=""></a>
                         <div class="down-content">
                         <a href="{% url 'product' product.pid %}"><h4>{{product.name}}</h4></a>
-                        <h6>$ {{product.curPrice}}</h6>
+                        <h6>£ {{product.curPrice}}</h6>
                         <p>{{product.description}}</p>
                       
                         
@@ -46,13 +74,5 @@
 
 
 
-
-
-{% for product in products %}
-
-<h5>{{product.name}}</h5>
-<h6>{{product.imageUrl}}</h6>
-<img src="{{product.imageUrl}}">
-{% endfor %}
 
 {% endblock content %}

@@ -9,7 +9,7 @@
 <h4> </h4>
 
 <h4>
-   $ {{product.curPrice}}
+	£ {{product.curPrice}}
 </h4>
 <br>
 <br>
@@ -31,7 +31,7 @@
 				<form class="form-horizontal qtyFrm" method = "POST" action = "{% url 'bid' product.pid %}" >
 					{% csrf_token %}
 				  <div class="control-group">
-					<label class="control-label"><span>Current Bid<h4>$ {{product.curPrice}}</h4>  </span></label> <br> <br> <br>
+					<label class="control-label"><span>Current Bid<h4>£ {{product.curPrice}}</h4>  </span></label> <br> <br> <br>
                     <label class="control-label"><span> Your offer - <input name="bidPrice" type="number" min= "{{minBid}}">  <button type="submit" class="btn btn-large btn-primary pull-right"> Bid<i class=" icon-shopping-cart"></i></button> </span></label>
 					
                     <div class="controls">

@@ -26,47 +26,67 @@ def check_completion():
 
 
 def home(request):
+    userLogged=False
+    username = ""
     check_completion()
     userLogged = False
     username = ""
     if request.user.is_authenticated:
-        username = request.user.username
+        username = userProfile.objects.get(user=request.user).First_Name
         userLogged = True
-    data = {"userLogged": userLogged, "username": username}
+    data = {"authenticated": userLogged, "name": username}
 
 
     return render(request, 'auction/home.html', data)
 
 def store(request):
+    userLogged=False
+    username = ""
+    if request.user.is_authenticated:
+        username = userProfile.objects.get(user=request.user).First_Name
+        userLogged = True
+    data = {"authenticated": userLogged, "name": username}
     check_completion()
+    res = productModel.objects.all()
     if request.method == "POST":
         queryString = request.POST.get("query")
         res = productModel.objects.filter(name__icontains=queryString)
-        data = {"products":res }
+        data["products"] = res 
         return render(request, 'auction/store.html', data)
 
     products = productModel.objects.all()
-    data = {"products":products }
+    data["products"] = res 
     return render(request, 'auction/store.html', data)
 
 def product(request, id):
+    userLogged=False
+    username = ""
+    if request.user.is_authenticated:
+        username = userProfile.objects.get(user=request.user).First_Name
+        userLogged = True
+    data = {"authenticated": userLogged, "name": username}
     check_completion()
     prod = productModel.objects.get(pid=id)
     curPrice = prod.curPrice
     minBid = (curPrice*101)//100 +1
-    data = {"product":prod, "minBid" : minBid}
+    data.update({"product":prod, "minBid" : minBid})
     return render(request, "auction/product.html", data)
 
 
 
 def bid(request, id):
+    userLogged=False
+    username = ""
+    if request.user.is_authenticated:
+        username = userProfile.objects.get(user=request.user).First_Name
+        userLogged = True
+    data = {"authenticated": userLogged, "name": username}
     check_completion()
     print("in bid")
     if not request.user.is_authenticated:
         return render(request,"auction/login.html")
     if request.method == "POST":
         print("in bid post")
-        data = {}
         prod = productModel.objects.get(pid=id)
         curPrice = prod.curPrice
         bidPrice = float(request.POST.get("bidPrice"))
@@ -112,15 +132,27 @@ def bid(request, id):
         return product(request, prod.pid)
 
 def userInfo(request):
+    userLogged=False
+    username = ""
+    if request.user.is_authenticated:
+        username = userProfile.objects.get(user=request.user).First_Name
+        userLogged = True
+    data = {"authenticated": userLogged, "name": username}
     check_completion()
     if not request.user.is_authenticated:
         return render(request, "auction/login.html")
     
     userp = userProfile.objects.get(user=request.user)
-    data = {"user" : userp}
+    data.update({"user" : userp})
     return render(request, "auction/userInfo.html",data)
 
 def addBalance(request):
+    userLogged=False
+    username = ""
+    if request.user.is_authenticated:
+        username = userProfile.objects.get(user=request.user).First_Name
+        userLogged = True
+    data = {"authenticated": userLogged, "name": username}
     check_completion()
     if not request.user.is_authenticated:
         return render(request, "login.html")
@@ -133,25 +165,43 @@ def addBalance(request):
     return userInfo(request)
 
 def allBidView(request):
+    userLogged=False
+    username = ""
+    if request.user.is_authenticated:
+        username = userProfile.objects.get(user=request.user).First_Name
+        userLogged = True
+    data = {"authenticated": userLogged, "name": username}
     check_completion()
     if not request.user.is_authenticated:
         return render(request, "login.html")
     
     allBids = bidModel.objects.filter(bidder=request.user)
-    data = {"allBid" : allBids}
+    data.update({"allBid" : allBids})
 
     return render(request,"auction/bidHistory.html", data)
 
 def myProducts(request):
+    userLogged=False
+    username = ""
+    if request.user.is_authenticated:
+        username = userProfile.objects.get(user=request.user).First_Name
+        userLogged = True
+    data = {"authenticated": userLogged, "name": username}
     check_completion()
     if not request.user.is_authenticated:
         return render(request, "login.html")
 
     products =  productModel.objects.filter(seller=request.user)
-    data = {"products":products}
+    data.update({"products":products})
     return render(request,"auction/myProducts.html", data)
 
 def addProduct(request):
+    userLogged=False
+    username = ""
+    if request.user.is_authenticated:
+        username = userProfile.objects.get(user=request.user).First_Name
+        userLogged = True
+    data = {"authenticated": userLogged, "name": username}
     if not request.user.is_authenticated:
         return render(request, "auction/login.html")
     if request.method == "POST":
@@ -161,8 +211,12 @@ def addProduct(request):
         description = request.POST.get("description")
         deadline = request.POST.get("deadline")
         image = request.FILES.get("image")
+        print(request.FILES)
+        print(type(image))
+        print(image)
+        #2022-08-07T22:58
+        deadline = datetime.strptime(deadline, '%Y-%m-%dT%H:%M')
         print(deadline)
-        return HttpResponse("success")
         newProduct = productModel(
             name = pname,
             basePrice = price,
@@ -170,7 +224,9 @@ def addProduct(request):
             age = age,
             description = description,
             deadline = deadline,
-            seller = request.user
+            seller = request.user,
+            image1 = image
         )
+        newProduct.save()
         return redirect("userInfo")
     return render(request, "auction/addProduct.html")
