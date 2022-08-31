@@ -40,6 +40,9 @@
         <div class="wishlist-border pt-2">
             <span class="wishlist"> <a href="{% url 'allBidView' %}"> My Biddings </a> </span>
         </div>
+        <div class="wishlist-border pt-2">
+            <span class="wishlist"> <a href="{% url 'addProduct' %}"> Add new product </a> </span>
+        </div>
         <div class="fashion-studio-border pt-2">
             <span class="fashion-studio"><form action="{% url 'addBalance' %}" method="POST">
                 {% csrf_token %}

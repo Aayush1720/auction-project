@@ -47,10 +47,10 @@ def store(request):
         userLogged = True
     data = {"authenticated": userLogged, "name": username}
     check_completion()
-    res = productModel.objects.all()
+    res = productModel.objects.filter(complete=False)
     if request.method == "POST":
         queryString = request.POST.get("query")
-        res = productModel.objects.filter(name__icontains=queryString)
+        res = productModel.objects.filter(name__icontains=queryString, complete=False)
         data["products"] = res 
         return render(request, 'auction/store.html', data)
 
@@ -201,6 +201,7 @@ def addProduct(request):
     if request.user.is_authenticated:
         username = userProfile.objects.get(user=request.user).First_Name
         userLogged = True
+        print(userLogged)
     data = {"authenticated": userLogged, "name": username}
     if not request.user.is_authenticated:
         return render(request, "auction/login.html")
@@ -229,4 +230,4 @@ def addProduct(request):
         )
         newProduct.save()
         return redirect("userInfo")
-    return render(request, "auction/addProduct.html")
+    return render(request, "auction/addProduct.html",data)

@@ -4,6 +4,34 @@
 
 {% block content %}
 <br><br><br><br>
+
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+
+<div class="login-page">
+    <div class="form">
+        
+      <form class="login-form" action = "{% url 'addProduct' %}" method = "post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h3>Add a Product</h3>
+        <input type="text" name="pname" placeholder="name">
+        <br>
+        <input type="number" name="price" placeholder="price" >
+        <br>
+        <input type="numeber" name="age" placeholder="age">
+        <br>
+        <input type="text" name="description" placeholder="description">
+        <br>
+        <label for="deadline"> Deadline  </label><input type="datetime-local" name="deadline" id="deadline" placeholder="deadline">
+        <br>
+        <label for="id_image"> product image  </label><input type="file" name="image" id="id_image">
+        <button type="submit"> ADD</button>
+      </form>
+    </div>
+  </div>
+
+
+
+
 <form action="{% url 'addProduct' %}" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     <input type="text" name="pname" placeholder="name">
