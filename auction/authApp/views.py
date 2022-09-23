@@ -7,6 +7,8 @@ from django.contrib.auth.models import User
 from bidding.views import home
 
 # Create your views here.
+
+# registration hanbdling view which creates new user on every registration
 def registerUser(request):
     if request.method == "POST":
         fname = request.POST.get("fname")
@@ -30,7 +32,7 @@ def registerUser(request):
     
     return render(request, "auction/register_user.html")
 
-
+# validates the login id and password when a user tries to log in
 def loginView(request):
     if request.user.is_authenticated:
         return redirect('home')
@@ -48,7 +50,7 @@ def loginView(request):
             return HttpResponse("Wrong email or password")
     
     return render(request, "auction/login.html")
-
+# handles logout request
 def logoutUser(request):
     if(request.user.is_authenticated):
         logout(request)

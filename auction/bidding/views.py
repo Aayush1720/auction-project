@@ -7,7 +7,11 @@ from authApp.models import userProfile
 from datetime import datetime
 # Create your views here.
 
+# view which just checks if any of the auction prodcuts have finsihed their deadlines
+# if yes then process the respective transactions
 def check_completion():
+    
+    # get all the products which have compoelted their deadlines
     completedProd = productModel.objects.filter(deadline__lte = datetime.now(), complete=False)
     print(completedProd)
     for prod in completedProd:
@@ -25,6 +29,7 @@ def check_completion():
 
 
 
+# return the home page along with required data
 def home(request):
     userLogged=False
     username = ""
@@ -39,6 +44,7 @@ def home(request):
 
     return render(request, 'auction/home.html', data)
 
+# processes get and post requests on store page which incldues searching
 def store(request):
     userLogged=False
     username = ""
@@ -58,6 +64,8 @@ def store(request):
     data["products"] = res 
     return render(request, 'auction/store.html', data)
 
+
+# returns a page with packed product depending on the product id
 def product(request, id):
     userLogged=False
     username = ""
@@ -73,7 +81,7 @@ def product(request, id):
     return render(request, "auction/product.html", data)
 
 
-
+# processes a bid based on the price and the id of product bid
 def bid(request, id):
     userLogged=False
     username = ""
@@ -131,6 +139,7 @@ def bid(request, id):
         curUser.save()
         return product(request, prod.pid)
 
+# gets the user information from the database and packs it on the user info page
 def userInfo(request):
     userLogged=False
     username = ""
@@ -146,6 +155,7 @@ def userInfo(request):
     data.update({"user" : userp})
     return render(request, "auction/userInfo.html",data)
 
+# adds balance to accounts 
 def addBalance(request):
     userLogged=False
     username = ""
@@ -164,6 +174,8 @@ def addBalance(request):
     curUser.save()
     return userInfo(request)
 
+
+# packs of all the biddings done by a user on a table and sends it  
 def allBidView(request):
     userLogged=False
     username = ""
@@ -180,6 +192,7 @@ def allBidView(request):
 
     return render(request,"auction/bidHistory.html", data)
 
+# gets all the products listed by one user and sends it in a template
 def myProducts(request):
     userLogged=False
     username = ""
@@ -195,6 +208,7 @@ def myProducts(request):
     data.update({"products":products})
     return render(request,"auction/myProducts.html", data)
 
+# responds when a user lists a new product with all the details about it
 def addProduct(request):
     userLogged=False
     username = ""
